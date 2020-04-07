@@ -25,21 +25,29 @@ export default class App extends Component<{}> {
     super(props);
     this.state = {};
   }
+componentDidMount=()=>{
+    var client = net.connect(port,host, function() { //'connect' listener  TO GET DATA TO WIFI BOARD
+      console.log('client connected');
+    });
+    client.on('data', function(data) {
+      console.log(data.toString()); // data wifi show
+    });
+}
 
   sendRequest = (LED) => {
-    if(LED == 1){
+    if(LED === 1){
       var client = net.connect(port,host,function() { // then you should sen req
         console.log('don 1');
         client.write('!LED1_ON#'); // order to wifi board module(this is set of my wifi board)
       });
     }
-    if(LED == 2){
+    if(LED === 2){
       var client = net.connect(port,host,function() {
         console.log('don 2');
         client.write('!LED2_ON#');// order to wifi board module  (this is set of my wifi board)
       });
     }
-    if(LED == 3){
+    if(LED === 3){
       var client = net.connect(port,host,function() {
         console.log('don 3');
         client.write('!LED3_ON#');// order to wifi board module(this is set of my wifi board)
@@ -56,17 +64,17 @@ export default class App extends Component<{}> {
                 <TouchableOpacity
                     style={styles.buttons}
                     onPress={()=>{this.sendRequest(1)}}>
-                  <Text>turn on LED 1</Text>
+                     <Text>turn on LED 1</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.buttons}
                     onPress={()=>{this.sendRequest(2)}}>
-                  <Text>turn on LED 2</Text>
+                      <Text>turn on LED 2</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.buttons}
                     onPress={()=>{this.sendRequest(3)}}>
-                  <Text>turn on LED 3</Text>
+                      <Text>turn on LED 3</Text>
                 </TouchableOpacity>
               </View>
         </>
@@ -82,6 +90,7 @@ const styles = StyleSheet.create({
     flex:1,
     justifyContent:'center',
     alignItems:'center',
+
   },
   buttons:{
     flexDirection:'column',
